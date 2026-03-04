@@ -192,6 +192,83 @@ function Badge({a}){
   return <span style={{fontSize:10,fontWeight:700,letterSpacing:".05em",padding:"3px 8px",borderRadius:20,background:pub?"#E8F5E9":"#FFF3E0",color:pub?"#2E7D32":"#E65100",textTransform:"uppercase"}}>{pub?"\u2713 Public":"\u{1F512} Members only"}</span>;
 }
 
+/* ─── Feedback Widget ─── */
+function FeedbackWidget() {
+  const [open,setOpen]=useState(false);
+  const [rating,setRating]=useState(null);
+  const [sent,setSent]=useState(false);
+  const emojis = [{e:"\u{1F62D}",l:"Frustrating"},{e:"\u{1F615}",l:"Confusing"},{e:"\u{1F44D}",l:"Okay"},{e:"\u{1F60D}",l:"Love it!"},{e:"\u{1F929}",l:"Amazing!"}];
+  const EMAIL="wilkinsm@gmail.com";
+
+  const send=(idx,comment)=>{
+    const emoji=emojis[idx];
+    const subj=encodeURIComponent("SPA Quick Finder Feedback: "+emoji.e+" "+emoji.l);
+    const body=encodeURIComponent("Rating: "+emoji.e+" "+emoji.l+"\n\n"+(comment||"(no comment)")+"\n\n---\nSent from SPA Quick Finder");
+    window.open("mailto:"+EMAIL+"?subject="+subj+"&body="+body,"_self");
+    setSent(true);
+    setTimeout(()=>{setSent(false);setOpen(false);setRating(null);},3000);
+  };
+
+  if(sent) return (
+    <div style={{textAlign:"center",padding:"32px 20px",animation:"fadeUp .3s ease-out"}}>
+      <span style={{fontSize:32,display:"block",marginBottom:8}}>{"\u2705"}</span>
+      <p style={{fontSize:15,color:"#3DD68C",fontWeight:600}}>Thanks! Your email app should open now.</p>
+      <p style={{fontSize:13,color:"#5A6A5F",marginTop:4}}>Just hit send \u2014 that\u2019s it!</p>
+    </div>
+  );
+
+  if(!open) return (
+    <div style={{textAlign:"center",padding:"32px 20px",marginTop:32}}>
+      <button onClick={()=>setOpen(true)} style={{background:"transparent",border:"1px solid #2A3D30",borderRadius:12,padding:"14px 28px",cursor:"pointer",fontFamily:"inherit",display:"inline-flex",alignItems:"center",gap:8,transition:"all .2s ease",color:"#7A8A7F",fontSize:14,fontWeight:500}}
+        onMouseOver={e=>{e.currentTarget.style.borderColor="#3DD68C";e.currentTarget.style.color="#3DD68C";}}
+        onMouseOut={e=>{e.currentTarget.style.borderColor="#2A3D30";e.currentTarget.style.color="#7A8A7F";}}>
+        <span style={{fontSize:18}}>{"\u{1F4AC}"}</span> Got feedback? Takes 10 seconds
+      </button>
+    </div>
+  );
+
+  return (
+    <div style={{marginTop:32,padding:"28px 24px",background:"#162420",border:"1px solid #1E3028",borderRadius:16,animation:"fadeUp .25s ease-out"}}>
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:16}}>
+        <p style={{fontSize:15,fontWeight:600,color:"#fff"}}>How\u2019s this tool working for you?</p>
+        <button onClick={()=>{setOpen(false);setRating(null);}} style={{background:"none",border:"none",color:"#5A6A5F",cursor:"pointer",fontSize:16,padding:4}}>{"\u2715"}</button>
+      </div>
+
+      {/* Emoji rating */}
+      <div style={{display:"flex",justifyContent:"center",gap:8,marginBottom:rating!==null?16:0}}>
+        {emojis.map((em,i)=>(
+          <button key={i} onClick={()=>setRating(i)} style={{
+            display:"flex",flexDirection:"column",alignItems:"center",gap:4,padding:"10px 8px",borderRadius:12,border:rating===i?"2px solid #3DD68C":"2px solid transparent",background:rating===i?"#1E3028":"transparent",cursor:"pointer",transition:"all .15s ease",minWidth:56
+          }}
+          onMouseOver={e=>{if(rating!==i)e.currentTarget.style.background="#1A2C22";}}
+          onMouseOut={e=>{if(rating!==i)e.currentTarget.style.background="transparent";}}>
+            <span style={{fontSize:28}}>{em.e}</span>
+            <span style={{fontSize:10,color:rating===i?"#3DD68C":"#5A6A5F",fontWeight:600}}>{em.l}</span>
+          </button>
+        ))}
+      </div>
+
+      {/* Comment + send */}
+      {rating!==null&&(
+        <div style={{animation:"fadeUp .2s ease-out"}}>
+          <textarea id="fb-comment" placeholder="Anything broken? Missing? Ideas? (optional)" rows={2}
+            style={{width:"100%",padding:"12px 14px",fontSize:14,fontFamily:"inherit",border:"1px solid #2A3D30",borderRadius:10,background:"#0F1A14",color:"#E8E6E1",resize:"vertical",marginBottom:12,outline:"none"}}
+            onFocus={e=>{e.target.style.borderColor="#3DD68C";}}
+            onBlur={e=>{e.target.style.borderColor="#2A3D30";}}
+          />
+          <button onClick={()=>{const c=document.getElementById("fb-comment");send(rating,c?c.value:"");}}
+            style={{width:"100%",padding:"13px",borderRadius:10,border:"none",background:"#3DD68C",color:"#0F1A14",fontSize:14,fontWeight:700,cursor:"pointer",fontFamily:"inherit",transition:"all .15s ease"}}
+            onMouseOver={e=>{e.currentTarget.style.background="#4DE89E";}}
+            onMouseOut={e=>{e.currentTarget.style.background="#3DD68C";}}>
+            Open email &amp; send {emojis[rating].e}
+          </button>
+          <p style={{fontSize:11,color:"#3A4A3F",textAlign:"center",marginTop:8}}>Opens your email app with feedback pre-filled. Just hit send.</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function Home() {
   const [q,setQ]=useState("");
   const [res,setRes]=useState([]);
@@ -398,8 +475,11 @@ export default function Home() {
           </div>
         )}
 
+        {/* Feedback section */}
+        <FeedbackWidget/>
+
         {/* Footer */}
-        <div style={{marginTop:56,paddingTop:24,borderTop:"1px solid #1E3028",textAlign:"center"}}>
+        <div style={{marginTop:40,paddingTop:24,borderTop:"1px solid #1E3028",textAlign:"center"}}>
           <p style={{fontSize:11,color:"#3A4A3F",lineHeight:1.7}}>
             Community tool &mdash; not affiliated with Speech Pathology Australia
             <br/><span style={{color:"#2E7D32"}}>{"\u2713"}</span> = public &nbsp;&middot;&nbsp; <span style={{color:"#E65100"}}>{"\u{1F512}"}</span> = requires SPA member login
