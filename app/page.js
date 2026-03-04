@@ -208,7 +208,7 @@ function FeedbackWidget() {
         method:"POST",
         headers:{"Content-Type":"application/json","Accept":"application/json"},
         body:JSON.stringify({
-          _subject:"SPA Quick Finder Feedback: "+emojis[rating].e+" "+emojis[rating].l,
+          _subject:"SPA Pathfinder Feedback: "+emojis[rating].e+" "+emojis[rating].l,
           rating:emojis[rating].e+" "+emojis[rating].l,
           comment:comment||"(no comment)",
           _template:"table"
@@ -305,7 +305,7 @@ export default function Home() {
     return ()=>{if(aiT.current)clearTimeout(aiT.current);};
   },[q]);
 
-  useEffect(()=>{inp.current&&inp.current.focus();},[]);
+  useEffect(()=>{if(inp.current&&window.innerWidth>768)inp.current.focus();},[]);
 
   const merged=(()=>{
     if(!q.trim())return[];
@@ -354,10 +354,10 @@ export default function Home() {
             <span style={{fontSize:11,letterSpacing:".12em",color:"#3DD68C",fontWeight:600,textTransform:"uppercase"}}>Speech Pathology Australia</span>
           </div>
           <h1 style={{fontFamily:"'Instrument Serif',Georgia,serif",fontSize:"clamp(32px,6vw,48px)",fontWeight:400,color:"#fff",lineHeight:1.1,marginBottom:10}}>
-            Quick Finder
+            Pathfinder
           </h1>
           <p style={{color:"#7A8A7F",fontSize:15,fontWeight:400,maxWidth:440,lineHeight:1.6}}>
-            Skip the maze. Search in plain English or browse by what you need.
+            The SPA website, untangled.
           </p>
         </div>
       </header>
