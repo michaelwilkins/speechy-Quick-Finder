@@ -95,7 +95,7 @@ const SPA_KNOWLEDGE = [
     taskLabel: "I\u2019m starting out in the profession",
     icon: "\u{1F393}",
     items: [
-      { title: "Becoming a Speech Pathologist", url: "https://www.speechpathologyaustralia.org.au/Public/Public/Become-a-speech-pathologist/Become-a-Speech-Pathologist.aspx", desc: "University courses, accreditation, and career overview.", access: PUBLIC },
+      { title: "Becoming a Speech Pathologist", url: "https://www.speechpathologyaustralia.org.au/Public/Public/services/Become-a-sp/Become-a-SP.aspx", desc: "University courses, accreditation, and career overview.", access: PUBLIC },
       { title: "New Graduate Info (PDF)", url: "https://speechpathologyaustralia.org.au/Common/Uploaded%20files/Smart%20Suite/Smart%20Library/eeb4217b-e5b5-4252-824d-e17d8f7281b7/20231011%20Information%20for%20new%20graduates_Final.pdf", desc: "Provisional certification, ethics & EBP modules, CPD requirements.", access: PUBLIC },
       { title: "Provisional \u2192 Full CPSP", url: "https://www.speechpathologyaustralia.org.au/Public/Public/Become/Aus-trained-apps/CPD-Requirements.aspx", desc: "200 practice hours, 12hrs supervision, ethics + EBP modules.", access: PUBLIC },
       { title: "Supervision & Mentoring", url: "https://www.speechpathologyaustralia.org.au/Public/Public/Become/Aus-trained-apps/CPD-Requirements.aspx", desc: "12 hours of mentoring/clinical supervision required in first 3 years.", access: PUBLIC },
@@ -251,7 +251,7 @@ function AccessBadge({ access }) {
       background: isPublic ? "rgba(30,90,70,0.1)" : "rgba(180,120,20,0.1)",
       color: isPublic ? "#1E5A46" : "#8B6914", whiteSpace: "nowrap", textTransform: "uppercase",
     }}>
-      {isPublic ? "\u{1F513} Public" : "\u{1F512} Members"}
+      {isPublic ? "\u2714 Public" : "\u{1F512} Members only"}
     </span>
   );
 }
@@ -457,7 +457,7 @@ export default function Home() {
         <div style={{ marginTop: 44, paddingTop: 20, borderTop: "1px solid #e8e5de", textAlign: "center" }}>
           <p style={{ fontSize: 11, color: "#aaa", lineHeight: 1.6 }}>
             Community tool &mdash; not officially affiliated with Speech Pathology Australia.
-            <br />{"\u{1F513}"} = publicly accessible &nbsp;|&nbsp; {"\u{1F512}"} = may require SPA member login
+            <br />{"\u2714"} = publicly accessible &nbsp;|&nbsp; {"\u{1F512}"} = may require SPA member login
           </p>
         </div>
       </div>
