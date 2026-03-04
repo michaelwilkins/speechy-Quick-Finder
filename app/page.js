@@ -196,24 +196,35 @@ function Badge({a}){
 function FeedbackWidget() {
   const [open,setOpen]=useState(false);
   const [rating,setRating]=useState(null);
-  const [sent,setSent]=useState(false);
+  const [sending,setSending]=useState(false);
+  const [done,setDone]=useState(false);
+  const [comment,setComment]=useState("");
   const emojis = [{e:"\u{1F62D}",l:"Frustrating"},{e:"\u{1F615}",l:"Confusing"},{e:"\u{1F44D}",l:"Okay"},{e:"\u{1F60D}",l:"Love it!"},{e:"\u{1F929}",l:"Amazing!"}];
-  const EMAIL="wilkinsm@gmail.com";
 
-  const send=(idx,comment)=>{
-    const emoji=emojis[idx];
-    const subj=encodeURIComponent("SPA Quick Finder Feedback: "+emoji.e+" "+emoji.l);
-    const body=encodeURIComponent("Rating: "+emoji.e+" "+emoji.l+"\n\n"+(comment||"(no comment)")+"\n\n---\nSent from SPA Quick Finder");
-    window.open("mailto:"+EMAIL+"?subject="+subj+"&body="+body,"_self");
-    setSent(true);
-    setTimeout(()=>{setSent(false);setOpen(false);setRating(null);},3000);
+  const send=async()=>{
+    setSending(true);
+    try {
+      await fetch("https://formsubmit.co/ajax/wilkinsm@gmail.com",{
+        method:"POST",
+        headers:{"Content-Type":"application/json","Accept":"application/json"},
+        body:JSON.stringify({
+          _subject:"SPA Quick Finder Feedback: "+emojis[rating].e+" "+emojis[rating].l,
+          rating:emojis[rating].e+" "+emojis[rating].l,
+          comment:comment||"(no comment)",
+          _template:"table"
+        })
+      });
+    } catch(e){}
+    setSending(false);
+    setDone(true);
+    setTimeout(()=>{setDone(false);setOpen(false);setRating(null);setComment("");},4000);
   };
 
-  if(sent) return (
+  if(done) return (
     <div style={{textAlign:"center",padding:"32px 20px",animation:"fadeUp .3s ease-out"}}>
       <span style={{fontSize:32,display:"block",marginBottom:8}}>{"\u2705"}</span>
-      <p style={{fontSize:15,color:"#3DD68C",fontWeight:600}}>Thanks! Your email app should open now.</p>
-      <p style={{fontSize:13,color:"#5A6A5F",marginTop:4}}>Just hit send \u2014 that\u2019s it!</p>
+      <p style={{fontSize:15,color:"#3DD68C",fontWeight:600}}>Thanks for your feedback!</p>
+      <p style={{fontSize:13,color:"#5A6A5F",marginTop:4}}>It really helps improve this tool.</p>
     </div>
   );
 
@@ -230,12 +241,12 @@ function FeedbackWidget() {
   return (
     <div style={{marginTop:32,padding:"28px 24px",background:"#162420",border:"1px solid #1E3028",borderRadius:16,animation:"fadeUp .25s ease-out"}}>
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:16}}>
-        <p style={{fontSize:15,fontWeight:600,color:"#fff"}}>How\u2019s this tool working for you?</p>
-        <button onClick={()=>{setOpen(false);setRating(null);}} style={{background:"none",border:"none",color:"#5A6A5F",cursor:"pointer",fontSize:16,padding:4}}>{"\u2715"}</button>
+        <p style={{fontSize:15,fontWeight:600,color:"#fff"}}>How's this tool working for you?</p>
+        <button onClick={()=>{setOpen(false);setRating(null);setComment("");}} style={{background:"none",border:"none",color:"#5A6A5F",cursor:"pointer",fontSize:16,padding:4}}>{"\u2715"}</button>
       </div>
 
       {/* Emoji rating */}
-      <div style={{display:"flex",justifyContent:"center",gap:8,marginBottom:rating!==null?16:0}}>
+      <div style={{display:"flex",justifyContent:"center",gap:8,marginBottom:rating!==null?16:0,flexWrap:"wrap"}}>
         {emojis.map((em,i)=>(
           <button key={i} onClick={()=>setRating(i)} style={{
             display:"flex",flexDirection:"column",alignItems:"center",gap:4,padding:"10px 8px",borderRadius:12,border:rating===i?"2px solid #3DD68C":"2px solid transparent",background:rating===i?"#1E3028":"transparent",cursor:"pointer",transition:"all .15s ease",minWidth:56
@@ -251,18 +262,18 @@ function FeedbackWidget() {
       {/* Comment + send */}
       {rating!==null&&(
         <div style={{animation:"fadeUp .2s ease-out"}}>
-          <textarea id="fb-comment" placeholder="Anything broken? Missing? Ideas? (optional)" rows={2}
+          <textarea value={comment} onChange={e=>setComment(e.target.value)} placeholder="Broken link? Missing page? Ideas? (optional)" rows={2}
             style={{width:"100%",padding:"12px 14px",fontSize:14,fontFamily:"inherit",border:"1px solid #2A3D30",borderRadius:10,background:"#0F1A14",color:"#E8E6E1",resize:"vertical",marginBottom:12,outline:"none"}}
             onFocus={e=>{e.target.style.borderColor="#3DD68C";}}
             onBlur={e=>{e.target.style.borderColor="#2A3D30";}}
           />
-          <button onClick={()=>{const c=document.getElementById("fb-comment");send(rating,c?c.value:"");}}
-            style={{width:"100%",padding:"13px",borderRadius:10,border:"none",background:"#3DD68C",color:"#0F1A14",fontSize:14,fontWeight:700,cursor:"pointer",fontFamily:"inherit",transition:"all .15s ease"}}
-            onMouseOver={e=>{e.currentTarget.style.background="#4DE89E";}}
-            onMouseOut={e=>{e.currentTarget.style.background="#3DD68C";}}>
-            Open email &amp; send {emojis[rating].e}
+          <button onClick={send} disabled={sending}
+            style={{width:"100%",padding:"13px",borderRadius:10,border:"none",background:sending?"#2A3D30":"#3DD68C",color:sending?"#5A6A5F":"#0F1A14",fontSize:14,fontWeight:700,cursor:sending?"wait":"pointer",fontFamily:"inherit",transition:"all .15s ease"}}
+            onMouseOver={e=>{if(!sending)e.currentTarget.style.background="#4DE89E";}}
+            onMouseOut={e=>{if(!sending)e.currentTarget.style.background="#3DD68C";}}>
+            {sending?"Sending...":"Send feedback "+emojis[rating].e}
           </button>
-          <p style={{fontSize:11,color:"#3A4A3F",textAlign:"center",marginTop:8}}>Opens your email app with feedback pre-filled. Just hit send.</p>
+          <p style={{fontSize:11,color:"#3A4A3F",textAlign:"center",marginTop:8}}>No login needed. One tap and done.</p>
         </div>
       )}
     </div>
