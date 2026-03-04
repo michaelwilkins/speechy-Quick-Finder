@@ -3,54 +3,51 @@
 import { useState, useRef, useEffect } from "react";
 
 /* ────────────────────────────────────────────
-   SPA Site Knowledge Base
+   SPA Site Knowledge Base — VERIFIED URLs
    ──────────────────────────────────────────── */
 const SPA_KNOWLEDGE = [
   {
     category: "CPD & Professional Development",
     icon: "📚",
     items: [
-      { title: "Upcoming CPD Events (Live)", url: "https://www.speechpathologyaustralia.org.au/Public/Shared_Content/Events/PEL.aspx", desc: "Browse and register for live professional education events across all states." },
-      { title: "On Demand Learning Hub", url: "https://www.speechpathologyaustralia.org.au/Public/Public/CPD-events/Learning-Hub.aspx", desc: "Self-paced online CPD courses you can complete anytime." },
+      { title: "Upcoming Live Events", url: "https://www.speechpathologyaustralia.org.au/Public/Shared_Content/Events/PEL.aspx", desc: "Browse and register for live professional education events across all states." },
+      { title: "On Demand Learning Hub", url: "https://www.speechpathologyaustralia.org.au/Public/Shared_Content/Events/On-Demand-Learning.aspx", desc: "Self-paced online CPD courses you can complete anytime." },
+      { title: "Member Events", url: "https://www.speechpathologyaustralia.org.au/Public/Shared_Content/Events/Member-Event-Listing.aspx", desc: "Professional education events for SPA members." },
       { title: "SPA 2026 Conference (Gold Coast)", url: "https://www.speechpathologyaustralia.org.au/Public/Public/CPD-events/SPA-conference/2026/Home.aspx", desc: "Annual national conference — program, registration, and sponsorship info." },
-      { title: "NSW CPD Events", url: "https://www.speechpathologyaustralia.org.au/SPAweb/Professional_Development/CPD_Workshops/SPAweb/Document_Management/CPD/nsw_cpd.aspx", desc: "CPD workshops and events in New South Wales." },
-      { title: "VIC CPD Events", url: "https://www.speechpathologyaustralia.org.au/SPAWeb/Document_Management/CPD/vic_cpd.aspx", desc: "CPD workshops and events in Victoria." },
-      { title: "QLD CPD Events", url: "https://www.speechpathologyaustralia.org.au/SPAweb/Professional_Development/CPD_Workshops/SPAweb/Document_Management/CPD/qld_cpd.aspx", desc: "CPD workshops and events in Queensland." },
-      { title: "SA CPD Events", url: "https://www.speechpathologyaustralia.org.au/SPAweb/whats_on/Events/SPAweb/Document_Management/CPD/sa_cpd.aspx", desc: "CPD workshops and events in South Australia." },
-      { title: "CPD Requirements & Logging", url: "https://www.speechpathologyaustralia.org.au/SPAweb/Members/CPD/SPAweb/Members/CPD/CPD.aspx", desc: "Information about CPD requirements for maintaining CPSP status." },
+      { title: "CPD Requirements", url: "https://www.speechpathologyaustralia.org.au/Public/Public/Become/Aus-trained-apps/CPD-Requirements.aspx", desc: "Minimum 20 hours/year — details on cultural learning, professional support, and logging." },
+      { title: "Cultural Learning (CPD)", url: "https://www.speechpathologyaustralia.org.au/Public/Public/Become/Certification-Program/Culture-learning.aspx", desc: "Requirements for the 2-hour cultural learning component of CPD." },
     ],
   },
   {
     category: "Membership & CPSP",
     icon: "🪪",
     items: [
-      { title: "Become a Member", url: "https://www.speechpathologyaustralia.org.au/Public/Public/Join-us/Join.aspx", desc: "Membership application, fees, and benefits for qualified speech pathologists." },
-      { title: "Membership Application Forms", url: "https://www.speechpathologyaustralia.org.au/SPAweb/Members/Membership_Application_Forms/SPAweb/Members/Membership_Application_Forms/Membership_Application_Forms.aspx", desc: "Download application forms for different membership types." },
-      { title: "CPSP Certification", url: "https://www.speechpathologyaustralia.org.au/SPAweb/Members/CPSP/SPAweb/Members/CPSP/Certified_Practising.aspx", desc: "Certified Practising Speech Pathologist — requirements, renewal, and benefits." },
-      { title: "Find a Speech Pathologist", url: "https://www.speechpathologyaustralia.org.au/Public/Public/Find-a-speech-pathologist/Find-a-Speech-Pathologist.aspx", desc: "Public directory to find a CPSP near you." },
-      { title: "Re-entering the Profession", url: "https://www.speechpathologyaustralia.org.au/SPAweb/Membership/Re_entering/SPAweb/Members/Re-entering_the_profession/Re-entering_the_profession.aspx", desc: "Pathway for speech pathologists returning to practice after a break." },
-      { title: "Skills Assessments (Overseas)", url: "https://www.speechpathologyaustralia.org.au/SPAweb/Membership/Skills_Assessment/SPAweb/Members/Skills_Assessment/Skills_Assessment.aspx", desc: "Mutual recognition and overseas qualification assessment." },
+      { title: "Join SPA — Certified Practising Member", url: "https://www.speechpathologyaustralia.org.au/Public/Public/Become/Aus-trained-apps/Certified-Practising-member.aspx", desc: "Eligibility, application, and requirements for CPSP membership." },
+      { title: "Non-Member Certified Practitioner", url: "https://www.speechpathologyaustralia.org.au/Public/Public/join/Aus-trained-apps/Non-Member-Certified-Practitioner.aspx", desc: "CPSP status without full SPA membership — for Medicare provider numbers." },
+      { title: "Find a Speech Pathologist", url: "https://www.speechpathologyaustralia.org.au/Public/Shared_Content/Smart-Suite/Smart-Maps/Public/Find-a-Speech-Pathologist.aspx", desc: "Public directory to find a CPSP near you — searchable map." },
+      { title: "Telepractice Provider Listing", url: "https://www.speechpathologyaustralia.org.au/Public/Shared_Content/TelePractice/Telepractice-Listing.aspx", desc: "Find a speech pathologist offering online/telehealth services." },
+      { title: "Student Membership", url: "https://www.speechpathologyaustralia.org.au/SPAweb/Membership/Students/SPAweb/Members/Students/Students.aspx", desc: "Benefits and application for student members." },
     ],
   },
   {
     category: "Clinical Resources & Guidelines",
     icon: "🩺",
     items: [
-      { title: "Position Statements", url: "https://www.speechpathologyaustralia.org.au/SPAweb/About_us/Position_Statements/SPAweb/About_Us/Position_Statements/Position_Statements.aspx", desc: "Official SPA positions on clinical topics (telehealth, dysphagia, literacy, etc)." },
-      { title: "Clinical Guidelines", url: "https://www.speechpathologyaustralia.org.au/SPAweb/Resources_for_Speech_Pathologists/Clinical_Guidelines/SPAweb/Resources_for_Speech_Pathologists/Clinical_Guidelines/Clinical_Guidelines.aspx", desc: "Evidence-based clinical guidelines for speech pathology practice." },
-      { title: "Resource Guide (Products & Services)", url: "https://www.speechpathologyaustralia.org.au/Public/Public/About-Us/Pubs%20and%20advertise/Resource-guide.aspx", desc: "Annual directory of speech pathology products, tools, and service providers." },
+      { title: "Position Statements", url: "https://www.speechpathologyaustralia.org.au/Public/Public/About-Us/Our-organisation/Position-statements/Position-statements.aspx", desc: "Official SPA positions on clinical topics (telehealth, dysphagia, literacy, autism, etc)." },
+      { title: "Clinical Guidelines (Members)", url: "https://www.speechpathologyaustralia.org.au/SPAweb/Members/Clinical_Guidelines/spaweb/Members/Clinical_Guidelines/Clinical_Guidelines.aspx", desc: "Evidence-based practice guidelines — AAC, autism, dysphagia, education, justice." },
+      { title: "SPA Core Documents", url: "https://www.speechpathologyaustralia.org.au/spaweb/About_Us/SPA_Documents/SPA_Documents.aspx", desc: "Parameters of Practice, Scope of Practice, Professional Standards, and annual reports." },
       { title: "Communication Milestones", url: "https://www.speechpathologyaustralia.org.au/Public/Public/Communication/Communication_Milestones.aspx", desc: "Talking and understanding milestones for children aged 1–5 years." },
-      { title: "Fact Sheets & Info for Public", url: "https://www.speechpathologyaustralia.org.au/Public/Public/Communication/Fact_Sheets.aspx", desc: "Plain-language fact sheets about communication disorders and speech pathology." },
-      { title: "Ethics & Professional Standards", url: "https://www.speechpathologyaustralia.org.au/SPAweb/About_us/Policies_and_Procedures/SPAweb/About_Us/Policies_and_Procedures/Policies_and_Procedures.aspx", desc: "Code of Ethics, professional standards, and SPA policies." },
+      { title: "Fact Sheets", url: "https://www.speechpathologyaustralia.org.au/Public/Public/Communication/Fact_Sheets.aspx", desc: "Plain-language fact sheets about communication disorders and speech pathology." },
+      { title: "Resource Guide", url: "https://www.speechpathologyaustralia.org.au/Public/Public/About-Us/Pubs%20and%20advertise/Resource-guide.aspx", desc: "Annual directory of speech pathology products, tools, and service providers." },
     ],
   },
   {
-    category: "NDIS & Advocacy",
+    category: "NDIS & Funding",
     icon: "📋",
     items: [
-      { title: "NDIS Information for Members", url: "https://www.speechpathologyaustralia.org.au/SPAweb/Resources_for_Speech_Pathologists/NDIS/SPAweb/Resources_for_Speech_Pathologists/NDIS/NDIS.aspx", desc: "Resources for speech pathologists working with NDIS participants." },
-      { title: "Advocacy & Policy", url: "https://www.speechpathologyaustralia.org.au/SPAweb/About_us/Advocacy/SPAweb/About_Us/Advocacy/Advocacy.aspx", desc: "SPA's advocacy work, submissions to government, and policy positions." },
-      { title: "Medicare & Private Health", url: "https://www.speechpathologyaustralia.org.au/SPAweb/Resources_for_Speech_Pathologists/Medicare/SPAweb/Resources_for_Speech_Pathologists/Medicare/Medicare.aspx", desc: "Information about Medicare provider numbers, CDM items, and private health fund rebates." },
+      { title: "Communication Disability & the NDIS", url: "https://www.speechpathologyaustralia.org.au/Communication_Hub/Communication_Disability/Communication_disability_and_the_NDIS", desc: "Info for consumers — eligibility, applications, and what NDIS funds for communication." },
+      { title: "NDIS Therapy Support Guidelines", url: "https://www.speechpathologyaustralia.org.au/Public/Members/News-and-publications/Articles/2025/10-October/new-ndis-therapy-support-guidelines.aspx", desc: "CPSP now required for all NDIS therapy supports — key changes explained." },
+      { title: "Rebates & Funded Programs", url: "https://www.speechpathologyaustralia.org.au/SPAweb/Resources_for_Speech_Pathologists/Medicare/SPAweb/Resources_for_Speech_Pathologists/Medicare/Medicare.aspx", desc: "Medicare CDM items, DVA, private health fund rebates, and other funding sources." },
     ],
   },
   {
@@ -58,30 +55,42 @@ const SPA_KNOWLEDGE = [
     icon: "💼",
     items: [
       { title: "Private Practice Resources", url: "https://www.speechpathologyaustralia.org.au/SPAweb/Resources_for_Speech_Pathologists/Private_Practice/SPAweb/Resources_for_Speech_Pathologists/Private_Practice/Private_Practice.aspx", desc: "Starting, running, and growing a speech pathology private practice." },
-      { title: "Employment Hub", url: "https://www.speechpathologyaustralia.org.au/SPAweb/Resources_for_Speech_Pathologists/Employment/SPAweb/Resources_for_Speech_Pathologists/Employment/Employment.aspx", desc: "Job boards, career resources, and information for employers hiring speech pathologists." },
-      { title: "Working with Support Workers", url: "https://www.speechpathologyaustralia.org.au/SPAweb/Resources_for_Speech_Pathologists/Support_Workers/SPAweb/Resources_for_Speech_Pathologists/Support_Workers/Support_Workers.aspx", desc: "Guidelines and position statements on working with allied health assistants." },
-      { title: "Telehealth Resources", url: "https://www.speechpathologyaustralia.org.au/SPAweb/Resources_for_Speech_Pathologists/Telehealth/SPAweb/Resources_for_Speech_Pathologists/Telehealth/Telehealth.aspx", desc: "Guidance, position statements, and resources for delivering speech pathology via telehealth." },
+      { title: "Employment Hub", url: "https://www.speechpathologyaustralia.org.au/SPAweb/Resources_for_Speech_Pathologists/Employment/SPAweb/Resources_for_Speech_Pathologists/Employment/Employment.aspx", desc: "Job boards, career resources, and information for employers." },
+      { title: "Telehealth Resources", url: "https://www.speechpathologyaustralia.org.au/SPAweb/Resources_for_Speech_Pathologists/Telehealth/SPAweb/Resources_for_Speech_Pathologists/Telehealth/Telehealth.aspx", desc: "Guidance and resources for delivering speech pathology via telehealth." },
+      { title: "Allied Health Assistants", url: "https://www.speechpathologyaustralia.org.au/SPAweb/Resources_for_Speech_Pathologists/Support_Workers/SPAweb/Resources_for_Speech_Pathologists/Support_Workers/Support_Workers.aspx", desc: "Guidelines on working with and delegating to support workers." },
+      { title: "Employing a Speech Pathologist", url: "https://www.speechpathologyaustralia.org.au/Public/Public/services/For-employers/Employing-a-Speech-Pathologist.aspx", desc: "Information for employers on hiring and contracting speech pathologists." },
+    ],
+  },
+  {
+    category: "For the Public",
+    icon: "👋",
+    items: [
+      { title: "What Speech Pathologists Do", url: "https://www.speechpathologyaustralia.org.au/Public/Public/services/About-speech-pathologists/What-speech-pathologists-do.aspx", desc: "Overview of the profession — who they help and how." },
+      { title: "What to Expect", url: "https://www.speechpathologyaustralia.org.au/Public/Public/services/Choose-a-speech-pathologist/What-to-expect.aspx", desc: "What happens when you see a speech pathologist — assessment, therapy, fees." },
+      { title: "Seeing a Speech Pathologist", url: "https://www.speechpathologyaustralia.org.au/SPAweb/Resources_for_the_Public/Seeing_a_Speech_Pathologist/SPAweb/Resources_for_the_Pubic/Seeing_a_Speech_Pathologist/Seeing_a_Speech_Pathologist.aspx", desc: "How to find, choose, and access speech pathology services including fees and funding." },
+      { title: "Communication Hub", url: "https://www.speechpathologyaustralia.org.au/Communication_Hub", desc: "Public-facing info hub about communication disorders, milestones, and support." },
     ],
   },
   {
     category: "About SPA & Contact",
     icon: "🏛️",
     items: [
-      { title: "About Speech Pathology Australia", url: "https://www.speechpathologyaustralia.org.au/Public/Public/About-Us/About-SPA.aspx", desc: "History, mission, strategic plan, and governance of the national association." },
+      { title: "About SPA", url: "https://www.speechpathologyaustralia.org.au/Public/Public/About-Us/About-SPA.aspx", desc: "History, mission, strategic plan, and governance of the national association." },
       { title: "Contact SPA", url: "https://www.speechpathologyaustralia.org.au/SPAweb/Contact_Us/SPAweb/Contact_Us/Contact_Us.aspx", desc: "Phone: (03) 9642 4899 | Email: office@speechpathologyaustralia.org.au" },
-      { title: "Board of Directors", url: "https://www.speechpathologyaustralia.org.au/SPAweb/About_us/Board_of_Directors/SPAweb/About_Us/Board/Board.aspx", desc: "Current SPA Board members and governance structure." },
+      { title: "News & Articles", url: "https://www.speechpathologyaustralia.org.au/SPAweb/About_us/News/SPAweb/About_Us/News/News.aspx", desc: "Latest news, media releases, and announcements from SPA." },
+      { title: "Reconciliation", url: "https://www.speechpathologyaustralia.org.au/SPAweb/About_us/Reconciliation/SPAweb/About_Us/Reconciliation/Reconciliation.aspx", desc: "SPA's Reconciliation Action Plan and Response to Racism." },
       { title: "Speech Pathology 2030", url: "https://www.speechpathologyaustralia.org.au/SPAweb/About_us/speechpath2030/SPAweb/About_Us/Speech_Pathology_2030/Speech_Pathology_2030.aspx", desc: "SPA's landmark project envisioning the future of the profession." },
-      { title: "Reconciliation Action Plan", url: "https://www.speechpathologyaustralia.org.au/SPAweb/About_us/Reconciliation/SPAweb/About_Us/Reconciliation/Reconciliation.aspx", desc: "SPA's commitment to reconciliation with Aboriginal and Torres Strait Islander peoples." },
-      { title: "News & Media", url: "https://www.speechpathologyaustralia.org.au/SPAweb/About_us/News/SPAweb/About_Us/News/News.aspx", desc: "Latest news, media releases, and announcements from SPA." },
+      { title: "SPA Website Search", url: "https://www.speechpathologyaustralia.org.au/Public/Public/Search.aspx", desc: "Can't find it? Use the SPA site's own search as a fallback." },
     ],
   },
   {
     category: "Students & New Grads",
     icon: "🎓",
     items: [
-      { title: "Becoming a Speech Pathologist", url: "https://www.speechpathologyaustralia.org.au/Public/Public/Become-a-speech-pathologist/Become-a-Speech-Pathologist.aspx", desc: "University courses, accreditation, and career information for aspiring speech pathologists." },
-      { title: "Student Membership", url: "https://www.speechpathologyaustralia.org.au/SPAweb/Membership/Students/SPAweb/Members/Students/Students.aspx", desc: "Benefits and application for student members." },
+      { title: "Becoming a Speech Pathologist", url: "https://www.speechpathologyaustralia.org.au/Public/Public/Become-a-speech-pathologist/Become-a-Speech-Pathologist.aspx", desc: "University courses, accreditation, and career information." },
       { title: "Accredited University Programs", url: "https://www.speechpathologyaustralia.org.au/SPAweb/Resources_for_Speech_Pathologists/Accreditation/SPAweb/Resources_for_Speech_Pathologists/Accreditation/Accreditation.aspx", desc: "List of accredited speech pathology degrees in Australia." },
+      { title: "New Graduate Info", url: "https://speechpathologyaustralia.org.au/Common/Uploaded%20files/Smart%20Suite/Smart%20Library/eeb4217b-e5b5-4252-824d-e17d8f7281b7/20231011%20Information%20for%20new%20graduates_Final.pdf", desc: "PDF guide — provisional certification, CPD, ethics and EBP modules." },
+      { title: "Return to Practice Program", url: "https://www.speechpathologyaustralia.org.au/Common/Uploaded%20files/Smart%20Suite/Smart%20Library/a2542c63-eb7e-4312-aca4-5555c445c123/2025_1002_SPA_RtP_Guide.pdf", desc: "Pathway for speech pathologists returning after a break from practice." },
     ],
   },
 ];
@@ -94,12 +103,12 @@ const ALL_ITEMS = SPA_KNOWLEDGE.flatMap((cat) =>
    Search engine with synonym expansion
    ──────────────────────────────────────────── */
 const SYNONYMS = {
-  cpd: ["professional development", "workshop", "training", "learning", "course", "event"],
-  ndis: ["disability", "funding", "scheme", "participant"],
+  cpd: ["professional development", "workshop", "training", "learning", "course", "event", "hours"],
+  ndis: ["disability", "funding", "scheme", "participant", "therapy support"],
   membership: ["member", "join", "renew", "fees", "application"],
-  cpsp: ["certified", "practising", "certification", "renewal"],
-  telehealth: ["online", "virtual", "remote", "telepractice"],
-  job: ["employment", "career", "hiring", "work", "vacancy"],
+  cpsp: ["certified", "practising", "certification", "renewal", "provider number"],
+  telehealth: ["online", "virtual", "remote", "telepractice", "teletherapy"],
+  job: ["employment", "career", "hiring", "work", "vacancy", "post"],
   child: ["paediatric", "pediatric", "kids", "children", "developmental"],
   milestone: ["development", "communication", "talking", "understanding", "age"],
   dysphagia: ["swallowing", "feeding", "eating", "drinking"],
@@ -107,11 +116,15 @@ const SYNONYMS = {
   ethics: ["professional standards", "code of conduct", "complaint"],
   conference: ["spa 2026", "gold coast", "annual conference"],
   overseas: ["international", "skills assessment", "mutual recognition", "migration"],
-  find: ["search", "directory", "locate", "near me"],
+  find: ["search", "directory", "locate", "near me", "map"],
   guidelines: ["clinical", "evidence", "best practice", "position statement"],
-  medicare: ["rebate", "provider number", "cdm", "bulk bill", "health fund"],
+  medicare: ["rebate", "provider number", "cdm", "bulk bill", "health fund", "dva"],
   student: ["university", "course", "degree", "graduate", "accredited"],
-  returning: ["re-enter", "re-entering", "comeback", "break from practice"],
+  returning: ["re-enter", "re-entering", "comeback", "break from practice", "return to practice"],
+  autism: ["autistic", "asd", "social communication"],
+  aac: ["augmentative", "alternative communication", "communication device", "complex communication"],
+  literacy: ["reading", "writing", "spelling", "phonology"],
+  cultural: ["aboriginal", "torres strait", "indigenous", "reconciliation"],
 };
 
 function scoreMatch(item, terms) {
@@ -152,7 +165,7 @@ const QUICK_LINKS = [
   { label: "Find a Speechie", query: "find speech pathologist" },
   { label: "CPD Events", query: "cpd events" },
   { label: "NDIS Resources", query: "ndis" },
-  { label: "Renew CPSP", query: "cpsp certification renewal" },
+  { label: "Join / CPSP", query: "cpsp join membership" },
   { label: "Milestones", query: "communication milestones child" },
   { label: "Telehealth", query: "telehealth" },
   { label: "Private Practice", query: "private practice" },
@@ -169,8 +182,12 @@ export default function Home() {
   const [focusedCategory, setFocusedCategory] = useState(null);
   const inputRef = useRef(null);
 
-  useEffect(() => { setResults(search(query)); }, [query]);
-  useEffect(() => { inputRef.current?.focus(); }, []);
+  useEffect(() => {
+    setResults(search(query));
+  }, [query]);
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
 
   const handleQuickLink = (q) => {
     setQuery(q);
@@ -282,7 +299,7 @@ export default function Home() {
               setBrowsing(false);
               setFocusedCategory(null);
             }}
-            placeholder="Try: 'CPD near me', 'NDIS resources', 'renew CPSP'…"
+            placeholder="Try: 'CPD events', 'NDIS', 'renew CPSP', 'milestones'…"
             style={{
               width: "100%",
               padding: "18px 20px 18px 52px",
@@ -373,8 +390,12 @@ export default function Home() {
                       {r.icon}
                     </span>
                     <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-                        <span style={{ fontSize: 16, fontWeight: 600, color: "#1E5A46", lineHeight: 1.3 }}>
+                      <div
+                        style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}
+                      >
+                        <span
+                          style={{ fontSize: 16, fontWeight: 600, color: "#1E5A46", lineHeight: 1.3 }}
+                        >
                           {r.title}
                         </span>
                         <span
@@ -418,14 +439,32 @@ export default function Home() {
 
         {/* No results */}
         {query && results.length === 0 && (
-          <div style={{ textAlign: "center", padding: "40px 20px", animation: "fadeUp .3s ease-out" }}>
+          <div
+            style={{ textAlign: "center", padding: "40px 20px", animation: "fadeUp .3s ease-out" }}
+          >
             <span style={{ fontSize: 32, display: "block", marginBottom: 12 }}>🤔</span>
             <p style={{ fontSize: 16, color: "#666", marginBottom: 8 }}>
               No matches for &ldquo;<strong>{query}</strong>&rdquo;
             </p>
-            <p style={{ fontSize: 14, color: "#999" }}>
+            <p style={{ fontSize: 14, color: "#999", marginBottom: 16 }}>
               Try different keywords, or browse categories below.
             </p>
+            <a
+              href={`https://www.speechpathologyaustralia.org.au/Public/Public/Search.aspx?SearchTerms=${encodeURIComponent(query)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "inline-block",
+                background: "#1E5A46",
+                color: "#fff",
+                padding: "10px 20px",
+                borderRadius: 8,
+                fontSize: 14,
+                fontWeight: 600,
+              }}
+            >
+              Search on SPA website →
+            </a>
           </div>
         )}
 
@@ -621,7 +660,14 @@ export default function Home() {
         )}
 
         {/* Footer */}
-        <div style={{ marginTop: 48, paddingTop: 24, borderTop: "1px solid #e8e5de", textAlign: "center" }}>
+        <div
+          style={{
+            marginTop: 48,
+            paddingTop: 24,
+            borderTop: "1px solid #e8e5de",
+            textAlign: "center",
+          }}
+        >
           <p style={{ fontSize: 12, color: "#aaa", lineHeight: 1.6 }}>
             Community tool — not officially affiliated with Speech Pathology Australia.
             <br />
